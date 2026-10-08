@@ -1,0 +1,351 @@
+:root {
+  --bg: #050303;
+  --fg: #d8cbbd;          /* old bone, a little flesh */
+  --dim: #6a5650;         /* bruise */
+  --hate: #a3262b;        /* dried blood */
+  --rot: #5c1518;         /* deeper, older blood */
+  --line: 2px solid var(--fg);
+  --mono: "Courier New", ui-monospace, Menlo, Consolas, monospace;
+  --soft: Georgia, "Times New Roman", serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--bg);
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  position: relative;
+}
+
+/* CRT Scanline & Glitch Overlay */
+body::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 999;
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+body.glitching {
+  animation: shake 0.15s infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 3px); }
+  50% { transform: translate(3px, -1px); }
+  75% { transform: translate(-3px, -2px); }
+  100% { transform: translate(1px, 2px); }
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--dim);
+  transition: color 0.3s ease, text-decoration-color 0.3s ease;
+}
+
+a:hover {
+  color: var(--hate);
+  text-decoration-color: var(--hate);
+}
+
+:focus-visible {
+  outline: 2px solid var(--hate);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--hate);
+  color: var(--fg);
+}
+
+/* NAVIGATION HEADER */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: var(--line);
+  background: #000;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--dim);
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: var(--fg);
+  border-bottom: 1px solid var(--hate);
+}
+
+.audio-btn {
+  background: transparent;
+  border: 1px solid var(--dim);
+  color: var(--dim);
+  padding: 4px 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.audio-btn:hover {
+  background: var(--hate);
+  color: var(--fg);
+  border-color: var(--hate);
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  border-bottom: var(--line);
+  overflow: hidden;
+  min-height: 82vh;
+}
+
+#c {
+  display: block;
+  width: 100%;
+  height: 82vh;
+}
+
+.hero p {
+  position: absolute;
+  right: 20px;
+  top: 18px;
+  max-width: 30ch;
+  text-align: right;
+  color: var(--dim);
+  font-family: var(--soft);
+  font-style: italic;
+  pointer-events: none;
+  transition: color 0.5s ease, opacity 0.5s ease;
+}
+
+/* TICKER */
+.ticker {
+  border-bottom: var(--line);
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--rot);
+  color: var(--fg);
+}
+
+.ticker span {
+  display: inline-block;
+  padding: 8px 0;
+  animation: run 60s linear infinite;
+}
+
+@keyframes run {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* CARDS */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: var(--line);
+}
+
+.card {
+  padding: 20px;
+  border-right: var(--line);
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background .6s ease, color .6s ease;
+  position: relative;
+}
+
+.card:last-child {
+  border-right: 0;
+}
+
+.card pre {
+  color: var(--dim);
+  font-size: 13px;
+  line-height: 1.15;
+  overflow: hidden;
+  user-select: none;
+}
+
+.card h3 {
+  font-family: var(--soft);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 34px;
+  margin: 18px 0 6px;
+}
+
+.card p {
+  color: var(--dim);
+  transition: color .6s ease;
+}
+
+.card:hover {
+  background: var(--rot);
+}
+
+.card:hover p {
+  color: var(--fg);
+}
+
+.card:hover pre {
+  color: var(--hate);
+}
+
+/* CORRUPT TEXT GLITCH EFFECT */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text.active {
+  color: var(--hate) !important;
+  text-shadow: 2px 0 var(--fg), -2px 0 var(--rot);
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 20px;
+  color: var(--dim);
+  flex-wrap: wrap;
+}
+
+@media(max-width: 760px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  .card {
+    border-right: 0;
+    border-bottom: var(--line);
+    min-height: 240px;
+  }
+  .hero {
+    min-height: 74vh;
+  }
+  #c {
+    height: 74vh;
+  }
+  .hero p {
+    left: 14px;
+    right: auto;
+    top: 12px;
+    text-align: left;
+    max-width: 22ch;
+    font-size: 14px;
+  }
+  .card pre {
+    font-size: 11px;
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  .ticker span {
+    animation: none;
+  }
+  body.glitching {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   ENTRY GATE - click-to-enter splash overlay
+   ============================================================ */
+#entry-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.8s ease;
+}
+
+#entry-gate.gate-fade {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gate-symbol {
+  font-family: var(--mono);
+  font-size: clamp(60px, 15vw, 140px);
+  line-height: 1;
+  color: var(--hate);
+  animation: gate-pulse 3s ease-in-out infinite;
+  margin-bottom: 40px;
+  letter-spacing: -0.05em;
+  text-shadow: 0 0 40px #a3262b88;
+}
+
+.gate-prompt {
+  font-family: var(--mono);
+  font-size: clamp(10px, 1.8vw, 14px);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--dim);
+  animation: gate-blink 2.2s step-end infinite;
+}
+
+.gate-sub {
+  font-family: var(--mono);
+  font-size: clamp(9px, 1.3vw, 11px);
+  letter-spacing: 0.2em;
+  color: #2a1618;
+  margin-top: 14px;
+  text-transform: uppercase;
+}
+
+@keyframes gate-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1);    }
+  50%       { opacity: 1;   transform: scale(1.06); }
+}
+
+@keyframes gate-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gate-symbol { animation: none; }
+  .gate-prompt { animation: none; }
+}
+

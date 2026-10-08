@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>grimoire // the shape of hate</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.grimoire-container {
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.grimoire-entry {
+  border: var(--line);
+  padding: 24px;
+  margin-bottom: 30px;
+  background: rgba(10, 5, 5, 0.85);
+}
+.grimoire-entry h2 {
+  font-family: var(--soft);
+  font-style: italic;
+  font-size: 26px;
+  margin-bottom: 12px;
+  color: var(--fg);
+  border-bottom: 1px solid var(--rot);
+  padding-bottom: 6px;
+}
+.grimoire-entry p {
+  color: var(--fg);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+.grimoire-entry blockquote {
+  border-left: 3px solid var(--hate);
+  padding-left: 14px;
+  color: var(--fg);
+  font-style: italic;
+  margin: 16px 0;
+}
+.grimoire-entry pre {
+  color: var(--hate);
+  margin: 14px 0;
+  font-size: 13px;
+  overflow-x: auto;
+}
+</style>
+</head>
+<body>
+
+<!-- ============ ENTRY GATE ============ -->
+<div id="entry-gate" tabindex="0" aria-label="Click anywhere to enter">
+  <div class="gate-symbol">◉</div>
+  <div class="gate-prompt">click to enter</div>
+  <div class="gate-sub">it is already looking at you</div>
+</div>
+
+<nav class="nav-bar">
+  <div class="nav-brand">VOID // GRIMOIRE OF HATRED</div>
+  <ul class="nav-links">
+    <li><a href="index.html">the hero</a></li>
+    <li><a href="grimoire.html" class="active">grimoire</a></li>
+  </ul>
+  <button id="audio-toggle" class="audio-btn" style="color: #a3262b;">AUDIO: SOUNDING</button>
+</nav>
+
+<div class="grimoire-container">
+  <article class="grimoire-entry">
+    <h2>I. THE EYE THAT DOES NOT WATCH</h2>
+    <p>There is an eye in the dark. It does not watch. To watch would imply interest, and the thing possesses none. It hates. That is all it has ever done. That is all it can do. That is all it is.</p>
+    <p>The eye is enormous, suspended in a place where there should be no space in which anything could exist. Its sclera is the color of ancient bone, stretched taut around a vast, wet iris. Veins crawl across its surface like roots beneath dead soil.</p>
+<pre>
+    .---.
+   /  .  \   <-- IT DOES NOT WATCH. IT HATES.
+  |  o o  |
+  |   ^   |
+   \  =  /
+    '---'
+</pre>
+  </article>
+
+  <article class="grimoire-entry">
+    <h2>II. THE SMILING MAN</h2>
+    <p>Sometimes the eye blinks. Sometimes it smiles. Sometimes it has a face. The face is always that of a man, thin and hairless, with pale skin stretched tightly over a skull that seems almost human. But the face is always smiling, because the thing does not understand what a smile is.</p>
+
+    <blockquote>
+      "The mouth stretches wider. The lips split. The cheeks tear backward. The jaw unhinges until the man's face becomes little more than a wound. From that wound comes a sound like millions of voices whispering a single word: NO."
+    </blockquote>
+  </article>
+
+  <article class="grimoire-entry">
+    <h2>III. THE FIRST VIOLENCE</h2>
+    <p>It remembers darkness. That is the second lie. Darkness requires something capable of seeing. There was only the absence of everything. And the thing hated that. So it opened an eye. The opening of that eye was the first violence. Reality appeared because the thing needed something to hate.</p>
+<pre>
+01001100 01001111 01010010 01000100 // NO. NO. NO.
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓
+</pre>
+  </article>
+
+  <article class="grimoire-entry">
+    <h2>IV. THE SHAPE OF THE THING</h2>
+    <p>Once, a mind older than language approached the eye and asked: <em>Why?</em> The question entered the pupil. The thing laughed, almost gently. Hatred did not come from pain. Pain had not created hatred. Hatred was simply the shape of the thing.</p>
+
+    <p>At last, the thing looked inward, found nothing, and hated the fact that it had understood. It expanded until there was no universe left. And in the pupil of the absolute blackness, another eye opened. The new eye stared back. And the thing smiled. Because at last, there was something left to hate.</p>
+  </article>
+</div>
+
+<footer>
+  <span>&copy; before time, after it</span>
+  <span>no cookies. it eats everything else.</span>
+  <span id="clock"></span>
+</footer>
+
+<script src="assets/audio.js"></script>
+<script src="assets/glitch.js"></script>
+<script>
+(function() {
+  var clk = document.getElementById("clock");
+  if (clk) {
+    setInterval(function () {
+      clk.textContent = new Date().toISOString().slice(11, 19) + " and counting";
+    }, 1000);
+  }
+
+  var audioBtn = document.getElementById("audio-toggle");
+  if (audioBtn) {
+    audioBtn.addEventListener("click", function () {
+      var active = CosmicAudio.toggle();
+      audioBtn.textContent = active ? "AUDIO: SOUNDING" : "AUDIO: MUTED";
+      audioBtn.style.color = active ? "#a3262b" : "#6a5650";
+    });
+  }
+
+  setInterval(function() {
+    CosmicGlitch.triggerMicroGlitch();
+  }, 2200);
+})();
+</script>
+<script src="assets/entry.js"></script>
+</body>
+</html>
+

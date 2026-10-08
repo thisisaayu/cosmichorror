@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>witness // hidden chamber</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.chamber-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: var(--line);
+  background: #000;
+  flex-wrap: wrap;
+}
+.chamber-btn {
+  background: transparent;
+  border: 1px solid var(--dim);
+  color: var(--fg);
+  padding: 6px 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.chamber-btn:hover {
+  background: var(--hate);
+  border-color: var(--hate);
+  color: var(--fg);
+}
+</style>
+</head>
+<body>
+
+<!-- ============ ENTRY GATE ============ -->
+<div id="entry-gate" tabindex="0" aria-label="Click anywhere to enter">
+  <div class="gate-symbol">◉</div>
+  <div class="gate-prompt">click to enter</div>
+  <div class="gate-sub">it is already looking at you</div>
+</div>
+
+<nav class="nav-bar">
+  <div class="nav-brand">WITNESS CHAMBER [HIDDEN]</div>
+  <ul class="nav-links">
+    <li><a href="index.html">the hero</a></li>
+    <li><a href="grimoire.html">grimoire</a></li>
+  </ul>
+  <button id="audio-toggle" class="audio-btn" style="color: #a3262b;">AUDIO: SOUNDING</button>
+</nav>
+
+<div class="chamber-controls">
+  <button class="chamber-btn" id="btn-glitch">FORCE GLITCH</button>
+  <button class="chamber-btn" id="btn-eye">WEEPING EYE</button>
+  <button class="chamber-btn" id="btn-tentacles">ELD RITCH MASS</button>
+  <button class="chamber-btn" id="btn-man">SMALL MAN</button>
+  <button class="chamber-btn" id="btn-monolith">OBSIDIAN MONOLITH</button>
+  <button class="chamber-btn" id="btn-vortex">VOID VORTEX</button>
+</div>
+
+<!-- ============ HERO: live 3D ASCII entity ============ -->
+<header class="hero">
+  <canvas id="c" aria-label="Interactive Witness Chamber 3D ASCII Entity" role="img"></canvas>
+  <p>it does not watch. it hates.</p>
+</header>
+
+<div class="ticker" aria-hidden="true"><span id="tick"></span></div>
+
+<!-- ============ CARDS: filled placeholders ============ -->
+<section class="cards" id="rites">
+  <article class="card">
+<pre>
+01000011 01010010
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▓▓▒▒▒▒▒▒▒▒▒▒▒▒▓▓
+▓▓▒▒░░░░░░░░▒▒▓▓
+▓▓▒▒░      ░▒▒▓▓
+▓▓▒▒░░░░░░░░▒▒▓▓
+</pre>
+    <div>
+      <h3>the eye</h3>
+      <p>The eye is suspended in a place where there should be no space. Its sclera is ancient bone, veins crawling across its surface like roots beneath dead soil.</p>
+    </div>
+  </article>
+  <article class="card">
+<pre>
+ ~ ~ ~ ~ ~ ~ ~ ~
+  ~ ~ ~ ~ ~ ~ ~
+ { while(alive){ }
+ {   decay++;    }
+ {   hum();      }
+ { }  /* it does not blink */
+</pre>
+    <div>
+      <h3>the iris</h3>
+      <p>The iris is a spiral of unnamable colors, folding like galaxies drowning in oil. At the center is a pupil that is a hole through reality itself.</p>
+    </div>
+  </article>
+  <article class="card">
+<pre>
+ .  :  .  :  .  :
+ :  .  :  .  :  .
+ ░░░░░░░░░░░░░░░░
+ ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+ ████████████████
+</pre>
+    <div>
+      <h3>the pupil</h3>
+      <p>When the pupil opens, there is no darkness behind it. There is only a depth with no measurable distance, extending beyond the boundaries of space.</p>
+    </div>
+  </article>
+</section>
+
+<footer>
+  <span>&copy; before time, after it</span>
+  <span>no cookies. it eats everything else.</span>
+  <span id="clock"></span>
+</footer>
+
+<script src="assets/audio.js"></script>
+<script src="assets/glitch.js"></script>
+<script src="assets/entities.js"></script>
+<script src="assets/script.js"></script>
+<script>
+(function() {
+  function bindFormBtn(id, formIdx) {
+    var btn = document.getElementById(id);
+    if (btn && window.CosmicForceForm) {
+      btn.addEventListener("click", function() {
+        window.CosmicForceForm(formIdx);
+      });
+    }
+  }
+  setTimeout(function() {
+    bindFormBtn("btn-eye", 0);
+    bindFormBtn("btn-tentacles", 1);
+    bindFormBtn("btn-man", 2);
+    bindFormBtn("btn-monolith", 3);
+    bindFormBtn("btn-vortex", 4);
+
+    var glitchBtn = document.getElementById("btn-glitch");
+    if (glitchBtn) {
+      glitchBtn.addEventListener("click", function() {
+        CosmicGlitch.triggerMajorGlitch(2000);
+        CosmicAudio.playGlitchSound();
+      });
+    }
+  }, 200);
+})();
+</script>
+<script src="assets/entry.js"></script>
+</body>
+</html>
