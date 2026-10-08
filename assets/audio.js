@@ -24,8 +24,12 @@ var CosmicAudio = (function () {
 
   function init() {
     if (ctx) {
-      if (ctx.state === "suspended") {
-        ctx.resume();
+      // Called again (e.g. double-tap on mobile) - just make sure we're running.
+      if (ctx.state !== "running") {
+        ctx.resume().then(function () {
+          isPlaying = true;
+          setFormAudioProfile(currentFormIdx);
+        }).catch(function () {});
       }
       return;
     }
@@ -232,23 +236,40 @@ var CosmicAudio = (function () {
     } catch (e) {}
   }
 
-  function toggle() {
+  function toggle(callback) {
     if (!ctx) {
+      // First call ever - init creates the context and resumes it.
       init();
-      return true;
+      // init() is synchronous up to ctx.resume() which is async.
+      // Poll briefly until the context is running, then report back.
+      var attempts = 0;
+      var poll = setInterval(function () {
+        attempts++;
+        if ((ctx && ctx.state === "running") || attempts > 20) {
+          clearInterval(poll);
+          isPlaying = ctx && ctx.state === "running";
+          if (callback) callback(isPlaying);
+        }
+      }, 50);
+      return; // state unknown yet - caller must use callback
     }
+
     if (ctx.state === "suspended") {
-      ctx.resume().then(function() {
+      ctx.resume().then(function () {
+        isPlaying = true;
         setFormAudioProfile(currentFormIdx);
+        if (callback) callback(true);
+      }).catch(function () {
+        if (callback) callback(false);
       });
-      isPlaying = true;
-      return true;
     } else if (ctx.state === "running") {
-      ctx.suspend();
-      isPlaying = false;
-      return false;
+      ctx.suspend().then(function () {
+        isPlaying = false;
+        if (callback) callback(false);
+      }).catch(function () {
+        if (callback) callback(true);
+      });
     }
-    return false;
   }
 
   return {

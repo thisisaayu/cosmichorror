@@ -1,15 +1,23 @@
-/* ---------- Entry Gate - Universal Autoplay Solution ----------
- * Shows a full-screen overlay on page load.
- * The user's click/tap is a real user gesture, so AudioContext.resume()
- * is guaranteed to succeed on every browser (Chrome, Firefox/Zen, Safari).
- * Once dismissed the overlay fades out and audio starts.
- * ----------------------------------------------------------------- */
+/* ---------- Entry Gate - Universal Autoplay Solution ---------- */
 (function () {
   var gate = document.getElementById("entry-gate");
   if (!gate) return;
 
-  function dismiss() {
-    // runs inside a real user gesture - AudioContext will always start.
+  var dismissed = false;
+
+  function dismiss(e) {
+    if (dismissed) return;
+    dismissed = true;
+
+    // Prevent the ghost click that mobile fires after touchstart
+    if (e && e.type === "touchstart") {
+      gate.addEventListener("click", function absorb(ce) {
+        ce.preventDefault();
+        gate.removeEventListener("click", absorb);
+      }, { once: true, capture: true });
+    }
+
+    // This is a direct user gesture - AudioContext.resume() is guaranteed here.
     CosmicAudio.init();
 
     gate.classList.add("gate-fade");
@@ -17,11 +25,11 @@
       gate.style.display = "none";
     }, { once: true });
 
-    // Failsafe: hide after 1.2 s even if transitionend never fires
-    setTimeout(function () { gate.style.display = "none"; }, 1200);
+    // Failsafe in case transitionend never fires
+    setTimeout(function () { gate.style.display = "none"; }, 1400);
   }
 
-  gate.addEventListener("click",     dismiss, { once: true });
-  gate.addEventListener("touchstart", dismiss, { once: true, passive: true });
-  gate.addEventListener("keydown",    dismiss, { once: true });
+  gate.addEventListener("touchstart", dismiss, { passive: false });
+  gate.addEventListener("click",      dismiss);
+  gate.addEventListener("keydown",    dismiss);
 })();

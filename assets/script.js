@@ -128,10 +128,17 @@
   // Audio Toggle Button binding
   var audioBtn = document.getElementById("audio-toggle");
   if (audioBtn) {
-    audioBtn.addEventListener("click", function () {
-      var active = CosmicAudio.toggle();
+    function updateAudioBtn(active) {
       audioBtn.textContent = active ? "AUDIO: SOUNDING" : "AUDIO: MUTED";
       audioBtn.style.color = active ? "#a3262b" : "#6a5650";
+    }
+    audioBtn.addEventListener("click", function () {
+      // Optimistically flip the label, then correct once state is confirmed.
+      var currentlyMuted = audioBtn.textContent === "AUDIO: MUTED";
+      updateAudioBtn(currentlyMuted); // flip immediately for responsiveness
+      CosmicAudio.toggle(function (confirmed) {
+        updateAudioBtn(confirmed);    // correct it once async resolves
+      });
     });
   }
 
